@@ -1,7 +1,9 @@
+import theme from "./config/theme";
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: "2024-11-01",
-  devtools: { enabled: true },
+  devtools: { enabled: false },
   css: ["~/assets/tailwind.css"],
   modules: [
     "@nuxtjs/tailwindcss",
@@ -17,5 +19,15 @@ export default defineNuxtConfig({
     componentName: "ColorScheme",
     storage: "localStorage",
     storageKey: "nuxt-color-mode",
+  },
+  primevue: {
+    options: {
+      theme: {
+        preset: theme,
+        options: {
+          darkModeSelector: ".dark-mode",
+        },
+      },
+    },
   },
 });
