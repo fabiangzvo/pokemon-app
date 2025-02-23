@@ -30,4 +30,10 @@ export default defineNuxtConfig({
       },
     },
   },
+  runtimeConfig: {
+    public: {
+      pokemonApiUrl:
+        process.env.NUX_PUBLIC_POKEMON_API_URL ?? "https://pokeapi.co/api/v2/",
+    },
+  },
 });
