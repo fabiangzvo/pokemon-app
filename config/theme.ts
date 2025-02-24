@@ -13,6 +13,7 @@ const theme = definePreset(Aura, {
           hoverColor: "{primary.700}",
           activeColor: "{primary.300}",
           focusBackground: "{primary.300}",
+          disableBackground: "#BFBFBF",
         },
         highlight: {
           background: "{primary.50}",
@@ -45,9 +46,11 @@ const theme = definePreset(Aura, {
           root: {
             primary: {
               focusBackground: "{primary.300}",
+              background: "#F22539",
+              borderColor: "#C00E20",
             },
             secondary: {
-              background: "{primary.100}",
+              background: "{red.100}",
               hoverBackground: "{primary.200}",
               activeBackground: "{primary.400}",
               color: "{primary.600}",
@@ -101,64 +104,6 @@ const theme = definePreset(Aura, {
             },
           },
         },
-      },
-    },
-    tag: {
-      colorScheme: {
-        light: {
-          secondary: {
-            color: "{primary.600}",
-            background: "{primary.100}",
-          },
-          warn: {
-            color: "{amber.600}",
-            background: "{amber.100}",
-          },
-        },
-      },
-    },
-    datepicker: {
-      colorScheme: {
-        light: {
-          today: {
-            background: "{primary.200}",
-          },
-        },
-      },
-    },
-    progressspinner: {
-      colorScheme: {
-        light: {
-          root: {
-            "color.1": "{primary.400}",
-            "color.2": "{primary.800}",
-            "color.3": "{primary.400}",
-            "color.4": "{primary.800}",
-          },
-        },
-      },
-    },
-    chip: {
-      colorScheme: {
-        light: {
-          root: {
-            background: "{rose.700}",
-            color: "{surface.100}",
-          },
-          removeIcon: {
-            background: "{rose.700}",
-            color: "{surface.100}",
-          },
-        },
-      },
-    },
-    radiobutton: {
-      root: {
-        checkedBackground: "{rose.700}",
-        checkedBorderColor: "{rose.700}",
-        checkedFocusBorderColor: "{rose.700}",
-        checkedHoverBackground: "{rose.600}",
-        checkedHoverBorderColor: "{rose.600}",
       },
     },
   },

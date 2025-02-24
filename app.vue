@@ -11,12 +11,12 @@
     <NuxtPage />
   </main>
 </template>
-<script setup>
+<script setup lang="ts">
 import "primeicons/primeicons.css";
 
 const color = useColorMode();
-function toggleTheme() {
-  console.log(color.value);
+
+function toggleTheme():void {
   color.value = color.value === "light" ? "dark" : "light";
 }
 </script>

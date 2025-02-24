@@ -3,9 +3,18 @@
 @tailwind utilities;
 
 body {
-  background-color: white;
+  background-color: #F9F9F9;
 }
 
 .dark-mode > body {
   background-color: black;
+}
+
+.custom-shadow {
+  box-shadow: 0px -5px 4px 0px #0000000d;
+}
+
+.p-button:disabled {
+  background-color: #bfbfbf;
+  border-color: #bfbfbf;
 }

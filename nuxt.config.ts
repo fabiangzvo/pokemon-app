@@ -12,7 +12,7 @@ export default defineNuxtConfig({
     "@nuxt/image",
   ],
   colorMode: {
-    preference: "system",
+    preference: "light",
     fallback: "light",
     hid: "nuxt-color-mode-script",
     globalName: "__NUXT_COLOR_MODE__",
@@ -33,7 +33,8 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       pokemonApiUrl:
-        process.env.NUX_PUBLIC_POKEMON_API_URL ?? "https://pokeapi.co/api/v2/",
+        process.env.NUX_PUBLIC_POKEMON_API_URL ??
+        "https://pokeapi.co/api/v2/pokemon",
     },
   },
 });
