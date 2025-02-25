@@ -1,7 +1,7 @@
 <template>
   <div class="mx-auto w-full max-w-[570px] max-sm:px-8">
     <SearchInput v-model="query" :currentTab="currentTab" />
-    <div class="card flex justify-center">
+    <div class="flex justify-center">
       <List
         :items="results"
         :total="total"
@@ -75,7 +75,7 @@ async function handleSearch(): Promise<void> {
     if (response?.results) {
       total.value = response.count;
       results.value = response.results;
-      next.value = response?.next ?? "";
+      next.value = response.next ?? "";
     }
   } catch (error) {
     console.error("Error getting data:", JSON.stringify(error));
@@ -95,11 +95,10 @@ async function onLoadMoreItems(): Promise<void> {
     isLoading.value = true;
 
     const response = await $fetch<ApiResponse>(next.value);
-
     if (response?.results) {
       total.value = response.count;
       results.value.push(...response.results);
-      next.value = response?.next ?? "";
+      next.value = response.next ?? "";
     }
   } catch (e) {
     console.error("Error getting data:", e);
@@ -123,7 +122,10 @@ async function executeSearch() {
   await handleSearch();
 }
 
-watch(() => [router.currentRoute.value.query, favorites.value], executeSearch);
+watch(
+  () => [router.currentRoute.value.query, () => favorites.value],
+  executeSearch
+);
 
 onMounted(executeSearch);
 </script>
