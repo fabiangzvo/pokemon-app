@@ -10,7 +10,7 @@
   >
     <template #list="slotProps">
       <ul
-        class="flex flex-col w-[578px] gap-y-[10px] h-[80vh] overflow-y-auto pb-12 mt-5 scrollbar"
+        class="flex flex-col w-[578px] gap-y-[10px] h-[80vh] overflow-y-auto pb-12 mt-5 scrollbar max-sm:w-[102%]"
       >
         <ListItem
           v-for="(item, index) in slotProps.items"

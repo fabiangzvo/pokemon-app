@@ -1,5 +1,5 @@
 <template>
-  <div class="mx-auto w-full max-w-[570px]">
+  <div class="mx-auto w-full max-w-[570px] max-sm:px-8">
     <SearchInput v-model="query" :currentTab="currentTab" />
     <div class="card flex justify-center">
       <List :items="results" :total="total" :currentTab="currentTab" />

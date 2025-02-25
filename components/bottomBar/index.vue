@@ -1,6 +1,6 @@
 <template>
   <nav
-    class="absolute w-full h-20 bottom-0 flex items-center justify-center gap-x-5 border-t custom-shadow bg-white dark:bg-black"
+    class="absolute w-full h-20 bottom-0 flex items-center justify-center gap-x-5 border-t custom-shadow bg-white dark:bg-black max-sm:px-8"
   >
     <Button
       class="h-11 w-[275px]"
