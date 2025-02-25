@@ -3,18 +3,41 @@
 @tailwind utilities;
 
 body {
-  background-color: #F9F9F9;
+  background-color: #f9f9f9;
+
+  .custom-shadow {
+    box-shadow: 0px -5px 4px 0px #0000000d;
+  }
 }
 
 .dark-mode > body {
-  background-color: black;
-}
+  background-color: #070707;
 
-.custom-shadow {
-  box-shadow: 0px -5px 4px 0px #0000000d;
+  .custom-shadow {
+    box-shadow: 0px -5px 4px 0px #3c3939;
+    border-color: black;
+  }
 }
 
 .p-button:disabled {
   background-color: #bfbfbf;
   border-color: #bfbfbf;
+}
+
+.scrollbar {
+  padding-right: 0.5em;
+}
+
+.scrollbar::-webkit-scrollbar {
+  width: 0.1em;
+}
+
+.scrollbar::-webkit-scrollbar-track {
+  background-color: var(--p-surface-200);
+  border-radius: 80px;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  background-color: #bfbfbf;
+  border-radius: 80px;
 }

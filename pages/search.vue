@@ -2,7 +2,7 @@
   <div class="mx-auto w-full max-w-[570px]">
     <SearchInput v-model="query" @search="onSubmitSearch" />
     <div class="card flex justify-center">
-      <List :items="results" :total="total" />
+      <List :items="results" :total="total" :handleLoadMore="onLoad" />
     </div>
   </div>
   <BottomBar :tab="currentTab" />
@@ -44,7 +44,7 @@ async function handleSearch(): Promise<void> {
 
     const response = await $fetch<Response>(path, { method: "GET" });
     if (response?.results) {
-      total.value = response.total;
+      total.value = response.count;
       results.value = response.results;
       next.value = response?.next ?? "";
     }
@@ -64,7 +64,7 @@ async function onLoad(): Promise<void> {
     const response = await $fetch<Response>(next.value);
 
     if (response?.results) {
-      total.value = response.total;
+      total.value = response.count;
       results.value = response.results;
       next.value = response?.next ?? "";
     }
