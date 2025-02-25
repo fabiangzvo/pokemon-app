@@ -2,7 +2,13 @@
   <div class="mx-auto w-full max-w-[570px] max-sm:px-8">
     <SearchInput v-model="query" :currentTab="currentTab" />
     <div class="card flex justify-center">
-      <List :items="results" :total="total" :currentTab="currentTab" />
+      <List
+        :items="results"
+        :total="total"
+        :currentTab="currentTab"
+        :isLoading="isLoading"
+        :onLoadMoreItems="onLoadMoreItems"
+      />
     </div>
   </div>
   <BottomBar :tab="currentTab" />
@@ -13,6 +19,8 @@ import type { Tab, ApiResponse, SearchPageState } from "@/shared/types/common";
 
 const config = useRuntimeConfig();
 const router = useRouter();
+
+const { favorites } = useFavorites();
 
 const state = reactive<SearchPageState>({
   currentTab: "all",
@@ -38,6 +46,27 @@ const { currentTab, isLoading, next, query, results, total } =
 async function handleSearch(): Promise<void> {
   try {
     isLoading.value = true;
+
+    if (currentTab.value === "favorites") {
+      if (query.value) {
+        const filtered = favorites.value.filter(
+          (favorite) => favorite.name === query.value
+        );
+
+        total.value = filtered.length;
+        results.value = filtered;
+        next.value = "";
+
+        return;
+      }
+
+      total.value = favorites.value.length;
+      results.value = favorites.value;
+      next.value = "";
+
+      return;
+    }
+
     const path = config.public.pokemonApiUrl.concat(
       query.value ? "/".concat(query.value) : ""
     );
@@ -49,7 +78,31 @@ async function handleSearch(): Promise<void> {
       next.value = response?.next ?? "";
     }
   } catch (error) {
-    console.error("Error getting data:", error);
+    console.error("Error getting data:", JSON.stringify(error));
+
+    total.value = 0;
+    results.value = [];
+    next.value = "";
+  }
+
+  isLoading.value = false;
+}
+
+async function onLoadMoreItems(): Promise<void> {
+  if (!next.value) return;
+
+  try {
+    isLoading.value = true;
+
+    const response = await $fetch<ApiResponse>(next.value);
+
+    if (response?.results) {
+      total.value = response.count;
+      results.value.push(...response.results);
+      next.value = response?.next ?? "";
+    }
+  } catch (e) {
+    console.error("Error getting data:", e);
   }
 
   isLoading.value = false;
@@ -67,10 +120,10 @@ async function executeSearch() {
   query.value = router.currentRoute.value.query.query as string;
   currentTab.value = (router.currentRoute.value.query.tab ?? "all") as Tab;
 
-  if (currentTab.value === "all") await handleSearch();
+  await handleSearch();
 }
 
-watch(() => [router.currentRoute.value.query], executeSearch);
+watch(() => [router.currentRoute.value.query, favorites.value], executeSearch);
 
 onMounted(executeSearch);
 </script>

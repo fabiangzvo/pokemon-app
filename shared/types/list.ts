@@ -4,6 +4,7 @@ import type { PokemonItem } from "./pokemon";
 export interface ListProps {
   items: PokemonItem[];
   total: number;
-  handleLoadMore?: () => Promise<void>;
+  onLoadMoreItems: () => Promise<void>;
   currentTab: Tab;
+  isLoading: boolean;
 }
