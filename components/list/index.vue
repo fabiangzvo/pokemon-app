@@ -4,7 +4,7 @@
     class="w-full"
     dataKey="url"
     unstyled
-    :value="items"
+    :value="currentTab === 'favorites' ? favorites : items"
     :total="total"
     :rows="20"
   >
@@ -23,11 +23,9 @@
 </template>
 
 <script setup lang="ts">
-interface ListProps {
-  items: PokemonItem[];
-  total: number;
-  handleLoadMore?: () => Promise<void>;
-}
+import type { ListProps } from "@/shared/types/list";
+
+const { favorites } = useFavorites();
 
 defineProps<ListProps>();
 </script>

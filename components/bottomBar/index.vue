@@ -22,9 +22,7 @@
 </template>
 
 <script setup lang="ts">
-interface BottomBarProps {
-  tab: "all" | "favorites";
-}
+import type { BottomBarProps } from "@/shared/types/common";
 
 const router = useRouter();
 const props = defineProps<BottomBarProps>();

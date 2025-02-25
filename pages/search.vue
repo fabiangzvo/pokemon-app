@@ -1,40 +1,40 @@
 <template>
   <div class="mx-auto w-full max-w-[570px]">
-    <SearchInput v-model="query" @search="onSubmitSearch" />
+    <SearchInput v-model="query" :currentTab="currentTab" />
     <div class="card flex justify-center">
-      <List :items="results" :total="total" :handleLoadMore="onLoad" />
+      <List :items="results" :total="total" :currentTab="currentTab" />
     </div>
   </div>
   <BottomBar :tab="currentTab" />
 </template>
 
 <script setup lang="ts">
-import type { LocationQueryRaw } from "vue-router";
-
-interface Response {
-  results: [];
-  total: number;
-  next: string;
-}
+import type { Tab, ApiResponse, SearchPageState } from "@/shared/types/common";
 
 const config = useRuntimeConfig();
 const router = useRouter();
 
-const query = ref("");
-const currentTab = ref("all");
-const results = ref([]);
-const total = ref(0);
-const next = ref("");
-const isLoading = ref(true);
+const state = reactive<SearchPageState>({
+  currentTab: "all",
+  isLoading: true,
+  next: "",
+  query: "",
+  results: [],
+  total: 0,
+});
 
-function onSubmitSearch(): void {
-  const queryParams: LocationQueryRaw = { page: 0, tab: currentTab.value };
+const { currentTab, isLoading, next, query, results, total } =
+  toRefs<SearchPageState>(state);
 
-  if (query.value) queryParams.query = query.value;
-
-  router.push({ path: "/search", query: queryParams });
-}
-
+/**
+ * @function handleSearch
+ *
+ * @description This function checks if the given Pokemon item already exists in the favorites list.
+ * If it exists, the item is removed from the list. If it does not exist, the item is added.
+ *
+ * @param {Pokemon} PokemonItem - The Pokemon item to be added or removed from favorites.
+ * @returns {void}
+ */
 async function handleSearch(): Promise<void> {
   try {
     isLoading.value = true;
@@ -42,48 +42,35 @@ async function handleSearch(): Promise<void> {
       query.value ? "/".concat(query.value) : ""
     );
 
-    const response = await $fetch<Response>(path, { method: "GET" });
+    const response = await $fetch<ApiResponse>(path, { method: "GET" });
     if (response?.results) {
       total.value = response.count;
       results.value = response.results;
       next.value = response?.next ?? "";
     }
   } catch (error) {
-    console.error("Error al obtener datos:", error);
+    console.error("Error getting data:", error);
   }
 
   isLoading.value = false;
 }
 
-async function onLoad(): Promise<void> {
-  if (!!next.value) return;
+/**
+ * @function executeSearch
+ *
+ * @description This function retrieves the query parameters from the current URL
+ * and execute the search using the provided values.
+ *
+ * @returns {void}
+ */
+async function executeSearch() {
+  query.value = router.currentRoute.value.query.query as string;
+  currentTab.value = (router.currentRoute.value.query.tab ?? "all") as Tab;
 
-  try {
-    isLoading.value = true;
-
-    const response = await $fetch<Response>(next.value);
-
-    if (response?.results) {
-      total.value = response.count;
-      results.value = response.results;
-      next.value = response?.next ?? "";
-    }
-  } catch (e) {
-    console.error("Error al obtener datos:", e);
-  }
-
-  isLoading.value = false;
+  if (currentTab.value === "all") await handleSearch();
 }
 
-watch(
-  () => [router.currentRoute.value.query],
-  async () => {
-    query.value = router.currentRoute.value.query.query ?? "";
-    currentTab.value = router.currentRoute.value.query.tab ?? "all";
+watch(() => [router.currentRoute.value.query], executeSearch);
 
-    await handleSearch();
-  }
-);
-
-onMounted(async () => await handleSearch());
+onMounted(executeSearch);
 </script>

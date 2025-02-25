@@ -5,14 +5,37 @@
       v-model="model"
       class="w-full"
       placeholder="Search"
-      @keypress.enter="emit('search')"
+      @keypress.enter="onSubmitSearch"
     />
   </IconField>
 </template>
 
 <script setup lang="ts">
+import type { Tab } from "@/shared/types/common";
+
+const router = useRouter();
+
 const model = defineModel({ default: "" });
-const emit = defineEmits(["search"]);
+const props = defineProps<{ currentTab: Tab }>();
+
+/**
+ * @function onSubmitSearch
+ *
+ * @description This function updates the 'query' parameter for the '/search' route,
+ * while preserving all other existing query parameters
+ *
+ * @returns {void}
+ */
+function onSubmitSearch(): void {
+  const queryParams: Record<string, string | number> = {
+    page: 0,
+    tab: props.currentTab,
+  };
+
+  if (model.value) queryParams.query = model.value;
+
+  router.push({ path: "/search", query: queryParams });
+}
 </script>
 
 <style scoped></style>
