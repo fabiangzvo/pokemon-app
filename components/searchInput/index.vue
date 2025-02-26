@@ -28,7 +28,6 @@ const props = defineProps<{ currentTab: Tab }>();
  */
 function onSubmitSearch(): void {
   const queryParams: Record<string, string | number> = {
-    page: 0,
     tab: props.currentTab,
   };
 

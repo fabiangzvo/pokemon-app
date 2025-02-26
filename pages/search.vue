@@ -1,8 +1,10 @@
 <template>
-  <div class="mx-auto w-full max-w-[570px] max-sm:px-8">
+  <div class="mx-auto w-full max-w-[570px] max-sm:px-8 overflow-hidden">
     <SearchInput v-model="query" :currentTab="currentTab" />
-    <div class="flex justify-center">
+    <div class="flex justify-center h-full">
+      <Loader v-if="isLoading" />
       <List
+        v-else
         :items="results"
         :total="total"
         :currentTab="currentTab"
@@ -56,13 +58,13 @@ async function handleSearch(): Promise<void> {
         total.value = filtered.length;
         results.value = filtered;
         next.value = "";
-
-        return;
+      } else {
+        total.value = favorites.value.length;
+        results.value = favorites.value;
+        next.value = "";
       }
 
-      total.value = favorites.value.length;
-      results.value = favorites.value;
-      next.value = "";
+      isLoading.value = false;
 
       return;
     }
