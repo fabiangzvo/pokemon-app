@@ -20,7 +20,7 @@
 import type { Tab, ApiResponse, SearchPageState } from "@/shared/types/common";
 
 const config = useRuntimeConfig();
-const router = useRouter();
+const route = useRoute();
 
 const { favorites } = useFavorites();
 
@@ -94,8 +94,6 @@ async function onLoadMoreItems(): Promise<void> {
   if (!next.value) return;
 
   try {
-    isLoading.value = true;
-
     const response = await $fetch<ApiResponse>(next.value);
     if (response?.results) {
       total.value = response.count;
@@ -105,8 +103,6 @@ async function onLoadMoreItems(): Promise<void> {
   } catch (e) {
     console.error("Error getting data:", e);
   }
-
-  isLoading.value = false;
 }
 
 /**
@@ -118,16 +114,16 @@ async function onLoadMoreItems(): Promise<void> {
  * @returns {void}
  */
 async function executeSearch() {
-  query.value = router.currentRoute.value.query.query as string;
-  currentTab.value = (router.currentRoute.value.query.tab ?? "all") as Tab;
-
+  query.value = route.query.query as string;
+  currentTab.value = (route.query.tab ?? "all") as Tab;
+  console.log(route.query);
   await handleSearch();
 }
 
-watch(
-  () => [router.currentRoute.value.query, () => favorites.value],
-  executeSearch
-);
+watch(() => route.query, executeSearch);
+watch(favorites, async (newValue, oldValue) => {
+  if (newValue.length !== oldValue.length) await executeSearch();
+});
 
 onMounted(executeSearch);
 </script>
