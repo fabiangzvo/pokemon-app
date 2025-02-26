@@ -4,6 +4,6 @@ export interface ListItemProps {
   item: PokemonItem;
 }
 
-export type handleFavoriteEmit = {
-  (event: "handleFavorite", value: PokemonItem): void;
+export type ListItemEmits = {
+  (event: "handleClick", value: PokemonItem): void;
 };

@@ -116,13 +116,14 @@ async function onLoadMoreItems(): Promise<void> {
 async function executeSearch() {
   query.value = route.query.query as string;
   currentTab.value = (route.query.tab ?? "all") as Tab;
-  console.log(route.query);
+
   await handleSearch();
 }
 
 watch(() => route.query, executeSearch);
 watch(favorites, async (newValue, oldValue) => {
-  if (newValue.length !== oldValue.length) await executeSearch();
+  if (newValue.length !== oldValue.length && currentTab.value === "favorites")
+    await executeSearch();
 });
 
 onMounted(executeSearch);

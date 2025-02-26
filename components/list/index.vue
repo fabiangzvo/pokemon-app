@@ -16,6 +16,7 @@
           v-for="(item, index) in slotProps.items"
           :key="index"
           :item="item"
+          @handleClick="(pokemon:PokemonItem) => (selectedPokemon = pokemon)"
         />
         <li
           v-show="items.length < total && currentTab !== 'favorites'"
@@ -39,13 +40,19 @@
       </div>
     </template>
   </DataView>
+  <PokemonModal
+    :url="selectedPokemon?.url ?? ''"
+    @handleClose="selectedPokemon = null"
+  />
 </template>
 
 <script setup lang="ts">
 import type { ListProps } from "@/shared/types/list";
+import type { PokemonItem } from "@/shared/types/pokemon";
 
 const props = defineProps<ListProps>();
 
+const selectedPokemon = ref<PokemonItem | null>();
 const observer = ref<HTMLDivElement | null>(null);
 let io: IntersectionObserver;
 
@@ -69,10 +76,10 @@ watch(observer, async () => {
   if (observer.value) {
     io.observe(observer.value);
   }
+});
 
-  onUnmounted(() => {
-    io.disconnect();
-  });
+onUnmounted(() => {
+  if (import.meta.client) io.disconnect();
 });
 </script>
 

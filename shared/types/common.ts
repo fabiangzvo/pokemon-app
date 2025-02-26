@@ -20,3 +20,15 @@ export interface SearchPageState {
   currentTab: Tab;
   isLoading: boolean;
 }
+
+export interface ModalProps {
+  url?: string;
+}
+
+export type ModalEmits = {
+  (event: "handleClose"): void;
+};
+
+export interface FavoriteButtonProps {
+  item: PokemonItem;
+}

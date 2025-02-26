@@ -48,6 +48,7 @@ const theme = definePreset(Aura, {
               focusBackground: "{primary.300}",
               background: "#F22539",
               borderColor: "#C00E20",
+              hoverColor: "{primary.100}",
             },
             secondary: {
               background: "#F5F5F5",
@@ -65,6 +66,12 @@ const theme = definePreset(Aura, {
               hoverColor: "{rose.100}",
               borderColor: "{surface.200}",
               activeBorderColor: "{primary.300}",
+            },
+          },
+          text: {
+            primary: {
+              hoverBackground: "transparent",
+              hoverColor: "{red.800}",
             },
           },
         },
@@ -99,6 +106,12 @@ const theme = definePreset(Aura, {
               hoverColor: "{rose.100}",
               borderColor: "{surface.200}",
               activeBorderColor: "{primary.300}",
+            },
+          },
+          text: {
+            primary: {
+              hoverBackground: "transparent",
+              hoverColor: "{red.800}",
             },
           },
         },
