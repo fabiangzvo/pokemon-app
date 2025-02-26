@@ -10,6 +10,8 @@ export default defineNuxtConfig({
     "@nuxtjs/color-mode",
     "@primevue/nuxt-module",
     "@nuxt/image",
+    "@nuxt/test-utils/module",
+    "@nuxt/fonts",
   ],
   colorMode: {
     preference: "light",
@@ -35,6 +37,13 @@ export default defineNuxtConfig({
       pokemonApiUrl:
         process.env.NUX_PUBLIC_POKEMON_API_URL ??
         "https://pokeapi.co/api/v2/pokemon",
+    },
+  },
+  fonts: {
+    google: {
+      families: {
+        Lato: [400, 500, 600, 700, 800, 900],
+      },
     },
   },
 });
