@@ -1,75 +1,62 @@
-# Nuxt Minimal Starter
+# Pokemon app
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Pokémon search engine: add your favorites, view their details, and share them with your friends!
+
+- Look at the [website](https://pokedex-111.netlify.app/).
+- Look at the [repository](https://github.com/fabiangzvo/pokemon-app).
+
+## Tech Stack
+
+**_Nuxt_**: Web framework for building scalable web applications. I used composables to create a global state to manage and store the list of favorites in localStorage. It also manages routes based on the folder structure and uses $fetch to make requests to the Pokémon API.
+
+**_PrimeVue_**: UI component library based on Vue. I used it to speed up the app's development and focus solely on the logic.
+
+**_Gsap_**: library for creating animations. I used it to animate the app's loader with a falling effect, 360-degree spins, and a bounce to give the illusion of throwing a ball.
+
+**_Tailwindcss_**: For managing the app's styles.
+
+**_IntersectionObserver_**: API that efficiently detects when an element is visible in the viewport. I used it to implement the infinite scroll effect when loading Pokémon.
+
+## Environment Variables
+
+To run this project, you will need to add the following environment variables to your .env file
+
+|             Key              |               Example               | Description            |
+| :--------------------------: | :---------------------------------: | :--------------------- |
+| `NUX_PUBLIC_POKEMON_API_URL` | `https://pokeapi.co/api/v2/pokemon` | URL of the Pokémon API |
 
 ## Setup
 
 Make sure to install dependencies:
 
 ```bash
-# npm
-npm install
-
-# pnpm
 pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
 ```
 
-## Development Server
+- ### Development Server
 
-Start the development server on `http://localhost:3000`:
+  Start the development server on `http://localhost:3000`:
 
-```bash
-# npm
-npm run dev
+  ```bash
+  pnpm dev
+  ```
 
-# pnpm
-pnpm dev
+- ### Production
 
-# yarn
-yarn dev
+  Build the application for production:
 
-# bun
-bun run dev
-```
+  ```bash
+  # pnpm
+  pnpm build
+  ```
 
-## Production
+- ### Locally preview production build
 
-Build the application for production:
+  ```bash
+  # pnpm
+  pnpm preview
+  ```
 
-```bash
-# npm
-npm run build
+## Author
 
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+- [@fabiangzvo](https://www.github.com/fabiangzvo)
