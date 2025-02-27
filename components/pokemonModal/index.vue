@@ -1,7 +1,7 @@
 <template>
   <Dialog
     modal
-    class="h-auto !max-h-none w-[570px] max-sm:w-[315px]"
+    class="h-auto !max-h-none w-[570px] max-sm:w-[315px] relative"
     pt:header:class="relative !p-0 h-[220px] bg-blue-500 rounded-t-xl"
     pt:content:class="!p-0"
     pt:footer:class="h-[84px] !px-[30px] !pb-0"
@@ -9,6 +9,12 @@
     :visible="!!url"
     @update:visible="emit('handleClose')"
   >
+    <div
+      v-show="isLoading"
+      class="absolute w-full h-full bg-white top-0 z-10 rounded-xl"
+    >
+      <Loader />
+    </div>
     <template #header>
       <div
         class="h-full w-full flex justify-center items-center bg-[url(/background.png)] bg-cover rounded-t-xl"
@@ -19,6 +25,7 @@
         />
       </div>
     </template>
+
     <div class="px-[30px]">
       <ModalItem label="Name" :value="pokemon?.name" />
       <ModalItem label="Weight" :value="pokemon?.weight" />
@@ -50,6 +57,7 @@
 <script setup lang="ts">
 import type { ModalProps, ModalEmits } from "@/shared/types/common";
 import type { PokemonDetail } from "@/shared/types/pokemon";
+import { toast } from "vue-sonner";
 
 const config = useRuntimeConfig();
 const props = defineProps<ModalProps>();
@@ -101,8 +109,11 @@ function copyToClipboard(): void {
     const props = objectToString(pokemon.value!);
 
     navigator.clipboard.writeText(props);
+
+    toast.success("Pokémon copied to clipboard");
   } catch (e) {
     console.error(e);
+    toast.error("Failed to copy the Pokémon to the clipboard");
   }
 }
 
@@ -120,7 +131,7 @@ onBeforeUpdate(async () => {
     console.error(e);
   }
 
-  isLoading.value = true;
+  isLoading.value = false;
 });
 </script>
 
