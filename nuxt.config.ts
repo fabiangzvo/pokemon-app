@@ -10,7 +10,6 @@ export default defineNuxtConfig({
     "@nuxtjs/color-mode",
     "@primevue/nuxt-module",
     "@nuxt/image",
-    "@nuxt/test-utils/module",
     "@nuxt/fonts",
   ],
   colorMode: {
