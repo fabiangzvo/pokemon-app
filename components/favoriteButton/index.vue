@@ -18,6 +18,7 @@
 <script setup lang="ts">
 import type { PokemonItem } from "@/shared/types/pokemon";
 import type { FavoriteButtonProps } from "@/shared/types/common";
+import { toast } from "vue-sonner";
 
 const { favorites } = useFavorites();
 
@@ -43,8 +44,12 @@ function handleFavorite(pokemon: PokemonItem): void {
       (favorite) => favorite.name !== pokemon.name
     );
 
+    toast.success("pokemon removed from favorites");
+
     return;
   }
+
+  toast.success("pokemon added to favorites");
   //add pokemon in favorite list
   favorites.value.push(pokemon);
 }
